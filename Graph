@@ -32,3 +32,89 @@ class Solution {
         traversal(i,j+1, grid, row, col);
     }
 }
+
+
+flood fill ->
+class Solution 
+{
+    public int[][] floodFill(int[][] image, int sr, int sc, int color) 
+    {
+        int l=image.length;
+        int b=image[0].length;
+        int c= image[sr][sc];
+        if(c== color) return image;
+        dfs(image, sr, sc, l, b, color, c);
+        return image;
+    }
+    public void dfs(int[][] image, int row, int col, int l, int b, int color, int c)
+    {
+        if(row<0 || row>= l || col<0 || col>=b || image[row][col] ==color || image[row][col]!=c)
+        return ;
+        image[row][col]=color;
+        dfs(image, row-1 , col, l , b, color, c);
+        dfs(image, row , col-1, l , b, color, c);
+        dfs(image, row , col+1, l , b, color, c);
+        dfs(image, row+1 , col, l , b, color, c);
+    }
+} 
+
+
+rotting oranges ->
+class three
+{
+    int r;
+    int c;
+    int t;
+    three(int r, int c, int t)
+    {
+        this.r=r;
+        this.c=c;
+        this.t=t;
+    }
+}
+class Solution {
+    public int orangesRotting(int[][] grid) {
+     // going to use dfs logic
+     int l = grid.length;
+     int b = grid[0].length;
+     Queue<three> qu = new LinkedList<>();
+     for(int i=0; i<l; i++)
+     {
+        for(int j=0; j<b; j++)
+        {
+            if(grid[i][j]==2)
+            {
+                qu.offer(new three (i ,j , 0));
+            }
+        }
+     }
+     int time=0;
+     while(!qu.isEmpty())
+     {
+      int row= qu.peek().r;  
+      int col= qu.peek().c;  
+       time= qu.peek().t; 
+      qu.poll(); 
+      check(row-1,col,time, grid, qu, l,b);
+      check(row+1,col,time, grid, qu, l,b);
+      check(row,col+1,time, grid, qu, l,b);
+      check(row,col-1,time, grid, qu, l,b);
+     }
+     for(int i=0;i <l;i ++)
+     {
+        for(int j=0; j<b; j++)
+        {
+            if(grid[i][j]==1) return -1;
+
+        }
+     }
+     return time;
+
+    }
+    public void check(int row, int col, int time, int [][] grid, Queue<three> qu, int l, int b)
+    {
+        if(row<0 || row>= l || col<0 || col>= b || grid[row][col]==2 || grid[row][col]==0 ) return;
+        grid[row][col] =2;
+        qu.offer(new three(row, col, time+1));
+    }
+} 
