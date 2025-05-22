@@ -1,0 +1,34 @@
+class Solution {
+    public int numIslands(char[][] grid) {
+        // these are girds can't look them as adjacecny matrix 
+        // can apply dfs and bfs 
+        // no fixed rule
+        // traverse see connections
+        int count=0;
+        int row= grid.length;
+        int col= grid[0].length;
+
+        for(int i=0; i< row; i++)
+        {
+            for(int j=0; j< col; j++)
+            {
+                if(grid[i][j]=='1')
+                {
+                    traversal(i,j,grid, row, col);
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+    public void traversal(int i, int j, char[][] grid, int row, int col)
+    {
+        if(i<0 || i>=row || j<0 || j>=col || grid[i][j]=='0')
+        return;
+        grid[i][j]='0';
+        traversal(i-1,j, grid, row, col);
+        traversal(i,j-1, grid, row, col);
+        traversal(i+1,j, grid, row, col);
+        traversal(i,j+1, grid, row, col);
+    }
+}
