@@ -1,0 +1,44 @@
+class Solution {
+    public boolean canFinish(int n, int[][] p) {
+        // using khans algo
+    List<List<Integer>> list= new ArrayList<>();
+    int[] indegree= new int[n];
+    for(int i=0; i<n; i++)
+    {
+        list.add(new ArrayList<>());
+    }
+    for(int i=0; i<p.length; i++)
+    {
+        list.get(p[i][1]).add(p[i][0]);
+        indegree[p[i][0]]++;
+    }
+    Queue<Integer> qu = new LinkedList<>();
+    for(int i=0; i<n; i++)
+    {
+        if(indegree[i]==0)
+        {
+            qu.offer(i);
+        }
+    }
+    List<Integer> list1= new ArrayList<>();
+    while(!qu.isEmpty())
+    {
+        int node= qu.peek();
+        qu.remove();
+        list1.add(node);
+        for(int n1: list.get(node))
+        {
+            indegree[n1]--;
+            if(indegree[n1]==0)
+            {
+                qu.offer(n1);
+            }
+        }
+    }
+    if(list1.size()==n)
+    {
+        return true;
+    }
+    else return false;
+    }
+}
