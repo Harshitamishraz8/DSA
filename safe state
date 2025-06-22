@@ -1,0 +1,39 @@
+class Solution {
+    public List<Integer> eventualSafeNodes(int[][] graph) {
+     // key point to notice which ever nodes comes in cylce is not a safe node
+     int n=graph.length;
+    int [] vis = new int[n];
+    int [] pathvis = new int[n];
+    int [] safe = new int[n];
+       for(int i=0; i<n; i++)
+       {
+        if(vis[i]==0)
+        dfs(i, vis, pathvis, safe, graph);
+       }
+       List<Integer> list= new ArrayList<>();
+       for(int i=0; i<n; i++)
+       {
+        if(safe[i]==1)
+        list.add(i);
+       }
+       return list;
+    }
+    public boolean dfs(int node, int[] vis, int[] pathvis, int[] safe, int[][] graph)
+    {
+        vis[node]=1;
+        pathvis[node]=1;
+        for(int n : graph[node])
+        {
+            if(vis[n]==0)
+            {
+                if(dfs(n,vis,pathvis,safe,graph))
+                return true;
+            }
+            if(pathvis[n]==1)
+            return true;
+        }
+        safe[node]=1;
+        pathvis[node]=0;  
+        return false;     
+    }
+}
